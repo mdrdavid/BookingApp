@@ -28,14 +28,29 @@ app.get("/", (req,res)=>{
 })
 
 //middlewaves
+app.use(express.json());
+
 // app.use("api/auth", authRoute)
-// app.use(express.json());
+
 
 app.use("/auth", authRoute)
 app.use("/users", authRoute)
 app.use("/hotels", authRoute)
 app.use("/rooms", authRoute)
+
+app.use((err,reg,res,next)=>{
+    // console.log("hi i am a midleware")
+    const errorStatus= error.status || 500
+    const errorMessage= error.message || "Something went wrong"
+    return res.status(errorStatus).json({
+        success:false.valueOf,
+        status:errorStatus,
+        message:errorMessage,
+        stack:err.stack,
+    })
+})
 app.listen(8800, ()=>{
     connect()
     console.log("Connected to backend.")
+
 })
