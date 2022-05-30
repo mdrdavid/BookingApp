@@ -1,4 +1,5 @@
 import Hotel from "../models/Hotel.js"
+
 export const createHotel = async(req, res, next)=>{
     const newHotel= new Hotel(req.body)
 try {
@@ -14,7 +15,7 @@ export const updateHotel = async(req, res, next)=>{
         const updatedHotel = await Hotel.findByIdAndDelete(req.params.id, {$set: req.body}, {new: true})
         res.status(200).json(updatedHotel)
         }catch(error){
-            rnext(err)
+            next(err)
         }
 }
 
@@ -32,15 +33,15 @@ export const getHotel = async(req, res, next)=>{
 export const deleteHotel = async(req, res, next)=>{
     try {
         const deleteHotel = await Hotel.findByIdAndDelete(req.params.id, {$set: req.body}, {new: true})
-        res.status(200).json(updatedHotel)
+        res.status(200).json("Hotel has been deleted")
         }catch(error){
             next(err)
         }
 }
 export const getHotels = async(req, res, next)=>{
     try {
-        const getHotels = await Hotel.findByIdAndDelete(req.params.id, {$set: req.body}, {new: true})
-        res.status(200).json(updatedHotel)
+        const hotels = await Hotel.findByIdAndDelete(req.params.id, {$set: req.body}, {new: true})
+        res.status(200).json(hotels)
         }catch(error){
             next(err)
         }
