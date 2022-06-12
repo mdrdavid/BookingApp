@@ -19,7 +19,17 @@ const Hotel = () => {
   const id = useLocation.pathname.split("/")[2];
   const [slideNumber, setSlideNumber] = useState(0);
   const [open, setOpen] = useState(false);
-  const {data,loading,error}= useFetch(`hotels/${id}`);
+  const {data,loading,error}= useFetch(`hotels/find${id}`);
+
+  const {dates, options} = useContext(SearchContext)
+
+  const MILLISECONDS_PER_DAY=1000*60*60*24;
+  function dayDifference(date1, date2) {
+    const timeDiff = Math.abs(date2.getTime()- date1.getTime());
+    const diffDays = Math.ceil(timeDiff / MILLISECONDS_PER_DAY);
+    return diffDays;
+  }
+  const days = dayDifference(dates[0].endDate, dates[0].stateDate)
   // const photos = [
   //   {
   //     src: "https://cf.bstatic.com/xdata/images/hotel/max1280x900/261707778.jpg?k=56ba0babbcbbfeb3d3e911728831dcbc390ed2cb16c51d88159f82bf751d04c6&o=&hp=1",
@@ -77,7 +87,7 @@ const Hotel = () => {
               onClick={() => handleMove("l")}
             />
             <div className="sliderWrapper">
-              <img src={data.photos[slideNumber].src} alt="" className="sliderImg" />
+              <img src={data.photos[slideNumber]} alt="" className="sliderImg" />
             </div>
             <FontAwesomeIcon
               icon={faCircleArrowRight}
@@ -104,11 +114,11 @@ const Hotel = () => {
             Book a stay over ${data.cheapestPrice} at this property and get a free airport taxi
           </span>
           <div className="hotelImages">
-            {data.photos.map((photo, i) => (
+            {data.photos?.map((photo, i) => (
               <div className="hotelImgWrapper" key={i}>
                 <img
                   onClick={() => handleOpen(i)}
-                  src={photo.src}
+                  src={photo}
                   alt=""
                   className="hotelImg"
                 />
@@ -135,13 +145,15 @@ const Hotel = () => {
               </p>
             </div>
             <div className="hotelDetailsPrice">
-              <h1>Perfect for a 9-night stay!</h1>
+              {/* <h1>Perfect for a 9-night stay!</h1> */}
+              <h1>Perfect for a {days}-night stay!</h1>
               <span>
                 Located in the real heart of Krakow, this property has an
                 excellent location score of 9.8!
               </span>
               <h2>
-                <b>$945</b> (9 nights)
+                {/* <b>$945</b> (9 nights) */}
+                <b>${days * data.cheapestPrice * options.room}</b> ({days}nights)
               </h2>
               <button>Reserve or Book Now!</button>
             </div>
@@ -149,7 +161,8 @@ const Hotel = () => {
         </div>
         <MailList />
         <Footer />
-      </div>}
+      </div>
+     )}
     </div>
   );
 };
