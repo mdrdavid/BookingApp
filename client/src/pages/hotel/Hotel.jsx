@@ -72,8 +72,8 @@ const Hotel = () => {
     <div>
       <Navbar />
       <Header type="list" />
-     { loading ? ("loading"): (
-     <div className="hotelContainer">
+    { loading ? ("loading"): (
+    <div className="hotelContainer">
         {open && (
           <div className="slider">
             <FontAwesomeIcon
@@ -162,7 +162,7 @@ const Hotel = () => {
         <MailList />
         <Footer />
       </div>
-     )}
+    )}
     </div>
   );
 };
