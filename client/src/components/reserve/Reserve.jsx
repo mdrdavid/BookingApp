@@ -52,6 +52,7 @@ date.setDate(date.getDate(+1))
             <div className="rDest">{item.desc}</div>
             <div className="rMax">Max People: <b>{item.maxPeople}</b></div>
             <div className="rPrice">{item.price}</div>
+            <div className="rSelectRoom">
 
             {item.roomNubers.map(roomNumber => (
               <div className="room">
@@ -62,7 +63,7 @@ date.setDate(date.getDate(+1))
                 disabled={!isAvilable(roomNumber)} />
               </div>
             ))}
-
+</div>
           </div>
         })}
         <button className="rButton" onClick={handleClick}>Reserve Now</button>
