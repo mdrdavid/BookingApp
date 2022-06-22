@@ -9,16 +9,32 @@ import NewUser from "./pages/newUser/NewUser";
 import ProductList from "./pages/productList/ProductList";
 import Product from "./pages/product/Product";
 import NewProduct from "./pages/newProduct/NewProduct";
+import { useContext } from "react";
+import { AuthContext } from "./components/context/AuthContext";
+import {DrkModeContextProvider} from "./context/darkModeContext"
 
 function App() {
+  const protectedRoute =({children})=>{
+    const {user} = useContext(AuthContext)
+
+    if(!user){
+      return <Navigate to="/login"/>
+    }
+
+    return children
+  }
   return (
     <Router>
       <Topbar />
       <div className="container">
         <Sidebar />
         <Switch>
-          <Route exact path="/">
+          {/* <Route exact path="/"> */}
+          <Route path="/"></Route>
+          <Route path="login" element={<Login/>}/>
+          <Route index element ={< protectedRoute>
             <Home />
+          </protectedRoute>}>
           </Route>
           <Route path="/users">
             <UserList />

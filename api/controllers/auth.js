@@ -41,7 +41,12 @@ if(!isPasswordCorrect) return next(createError(400, "Wrong password or Username!
 const token = jwt.sign({id:user._id, isAdmin: user.isAdmin}, "sdfsdfs")
 
 const {password,isAdmin, ...otherDetails}= user._doc
-res.cookie("access_token", token, {httpOnly: true}).status(200).json({otherDetails})
+res
+.cookie("access_token", token, {
+    httpOnly: true
+})
+.status(200)
+.json({details:{...otherDetails},isAdmin})
 }catch(err){
     next(err)
 }

@@ -1,5 +1,5 @@
-import { useEffect, useReducer} from "react";
-import { createContext } from "react";
+import { useEffect, useReducer } from "react";
+
 const INITIAL_STATE={
     user:null,
     loading:false,
@@ -8,7 +8,7 @@ const INITIAL_STATE={
 
 export const AuthContext = createContext(INITIAL_STATE)
 
-const AuthReducer = (state,action)=>{
+constAuthReducer = (state,action)=>{
     switch(action.type){
         case "LOGIN_START":
             return {
@@ -40,9 +40,7 @@ const AuthReducer = (state,action)=>{
 }
 
 export const AuthContextProvider =({children})=>{
-    // for testing
-    // const [state,dispatch]= useReducer(searchReducer,INITIAL_STATE)
-    const [state,dispatch]= useReducer(INITIAL_STATE)
+    const [state,dispatch]= useReducer(searchReducer,INITIAL_STATE)
     useEffect(()=>{
 localStorage.setItem("user",JSON.stringify(state.user))
     },[state.user])

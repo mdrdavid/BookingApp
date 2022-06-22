@@ -5,6 +5,9 @@ import useFetch from "../../hooks/useFetch";
 import { useState } from "react";
 import { useContext } from "react";
 import axios from "axios";
+import { SearchContext } from "../../context/SearchContext";
+import List from "../../pages/list/List";
+import {useNavigate} from "react-router-dom"
 
 const Reserve = ({ setOpen, hotelid }) => {
   const [selectedRooms, setSelectedRooms] = useState([])
@@ -17,7 +20,7 @@ const Reserve = ({ setOpen, hotelid }) => {
 
     let dates = []
     while (date <= end) {
-      list.push(new Date(date))
+      List.push(new Date(date))
       date.setDate(date.getDate(+1))
     }
     return dates;
@@ -32,12 +35,12 @@ const Reserve = ({ setOpen, hotelid }) => {
     return isFound
   }
 
-  const handleSelect = (e) => {
-    const seclected = e.target.checked
-    const value = e.target.value
-    setSelectedRooms(checked ? [...selectedRooms, value]
-      : selectedRooms.filter(item => item !== value))
-  };
+  // const handleSelect = (e) => {
+  //   const selected = e.target.checked
+  //   const value = e.target.value
+  //   setSelectedRooms(checked ? [...selectedRooms, value]
+  //     : selectedRooms.filter(item => item !== value))
+  // };
 
   const navigate = useNavigate()
   const handleClick = async () => {
@@ -71,7 +74,7 @@ const Reserve = ({ setOpen, hotelid }) => {
                   <label>{roomNumber.number}</label>
                   <input type="checkbox"
                     value={roomNumber._id}
-                    onChange={handleSelect}
+                    // onChange={handleSelect}
                     disabled={!isAvilable(roomNumber)} />
                 </div>
               ))}
